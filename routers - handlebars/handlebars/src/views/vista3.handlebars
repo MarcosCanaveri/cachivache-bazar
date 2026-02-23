@@ -1,0 +1,12 @@
+{{> navbar}}
+
+{{#if users.length}}
+
+<ul>
+{{#each users}}
+    <li>{{first_name}} {{email}}</li>
+{{/each}}
+</ul>
+{{else}}
+<p>No hay usuarios disponibles.</p>
+{{/if}}

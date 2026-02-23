@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { userManager } from "../../managers/user-manager.js";
 
 const router = Router();
 
@@ -23,8 +24,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const user = await userManager.register(id);
-        res.json(user);
+      await userManager.register(req.body);
+        res.redirect('/users');
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
