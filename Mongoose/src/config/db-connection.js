@@ -7,6 +7,3 @@ export const initMongoDB = async () => {
         throw new Error(error);
     }
 };
-
-initMongoDB().then(() => 
-    console.log('MongoDB connected successfully')).catch((err) => console.log(err));
