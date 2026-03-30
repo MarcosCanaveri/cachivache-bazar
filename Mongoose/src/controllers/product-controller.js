@@ -1,12 +1,12 @@
-import { productRepository } from "../repositorios/product-repository";
-import { CustomError } from "../utils/custom-error";
+import { productRepository } from "../repositorios/product-repository.js";
+import { CustomError } from "../utils/custom-error.js";
 
 class ProductController {
     constructor(repository) {
         this.repository = repository;
     }
 
-    getAll = async (req, res) => {
+    getAll = async (req, res, next) => {
         try {
             const response = await this.repository.getAll();
             res.json(response);
@@ -15,7 +15,7 @@ class ProductController {
         }
 };
 
-    getById = async (req, res) => {
+    getById = async (req, res, next) => {
         try {
             const { id } = req.params;
             const response = await this.repository.getById(id);

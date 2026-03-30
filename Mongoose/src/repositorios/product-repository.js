@@ -39,7 +39,7 @@ class ProductRepository {
 
     delete = async (id) => {
         try {
-
+            return await this.model.findByIdAndDelete(id);
         } catch (error) {
             throw new Error(error);
         }
