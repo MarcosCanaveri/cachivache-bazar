@@ -12,6 +12,7 @@
   "description": "",
   "dependencies": {
     "express": "^5.2.1",
-    "mongoose": "^9.2.4"
+    "mongoose": "^9.2.4",
+    "mongoose-paginate-v2": "^1.9.4"
   }
 }

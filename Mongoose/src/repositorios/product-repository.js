@@ -5,9 +5,9 @@ class ProductRepository {
         this.model = model;
     }
 
-    getAll = async () => {
+    getAll = async (page = 1, limit = 5) => {
         try {
-            return await this.model.find();
+            return await this.model.paginate({}, { limit: 5, page: 1 });
         } catch (error) {
             throw new Error(error);
         }
@@ -20,6 +20,15 @@ class ProductRepository {
             throw new Error(error);
         }
     };
+
+    getByName = async (name) => {
+        try {
+            return await this.model.findOne({ name: name }).explain();
+        } catch (error) {
+            throw new Error(error);
+        }
+    };
+
 
     create = async (body) => {
         try {

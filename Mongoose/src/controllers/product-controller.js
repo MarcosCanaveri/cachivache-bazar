@@ -8,12 +8,25 @@ class ProductController {
 
     getAll = async (req, res, next) => {
         try {
-            const response = await this.repository.getAll();
-            res.json(response);
+            const { page, limit } = req.query;
+            const response = await this.repository.getAll(page, limit);
+            res.json({
+                totalDocs: response.totalDocs,
+                status: 'success',
+                payload: response.docs,
+                totalPages: response.totalPages,
+                prevPage: response.prevPage,
+                nextPage: response.nextPage,
+                page: response.page,
+                hasPrevPage: response.hasPrevPage,
+                hasNextPage: response.hasNextPage,
+                prevLink: response.hasPrevPage ? `http://localhost:8080/api/products?page=${response.prevPage}&limit=${limit}` : null,
+                nextLink: response.hasNextPage ? `http://localhost:8080/api/products?page=${response.nextPage}&limit=${limit}` : null
+            });
         } catch (error) {
             next(error);
         }
-};
+    };
 
     getById = async (req, res, next) => {
         try {
@@ -26,19 +39,32 @@ class ProductController {
         }
     };
 
-    create = async (req, res, next) => {
+    getByName = async (req, res, next) => {
         try {
-            const response = await this.repository.create( req.body );
+            const { name } = req.params;
+            const response = await this.repository.getByName(name);
+            if (!response) throw new CustomError('Product not found', 404);
             res.json(response);
         } catch (error) {
             next(error);
         }
     };
 
+    create = async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const response = await this.repository.create(req.body );
+            if (!response) throw new CustomError('Product not found', 404);
+            res.json(response);
+        } catch (error) {
+            next(error);
+        }
+        };
+
     update = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const response = await this.repository.update(id,  req.body );
+            const response = await this.repository.update(id, req.body );
             if (!response) throw new CustomError('Product not found', 404);
             res.json(response);
         } catch (error) {
