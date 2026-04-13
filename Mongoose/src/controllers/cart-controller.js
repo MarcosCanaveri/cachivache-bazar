@@ -6,6 +6,16 @@ class CartController {
         this.repository = repository;
     }
 
+    getAll = async (_req, res, next) => {
+        try {
+            const response = await this.repository.getAll();
+            res.json(response);
+        } catch (error) {
+            next(error);
+        }
+    };
+
+
     getById = async (req, res, next) => {
         try {
             const { id } = req.params;
@@ -17,22 +27,9 @@ class CartController {
         }
     };
 
-    getByName = async (req, res, next) => {
-        try {
-            const { name } = req.params;
-            const response = await this.repository.getByName(name);
-            if (!response) throw new CustomError('Cart not found', 404);
-            res.json(response);
-        } catch (error) {
-            next(error);
-        }
-    };
-
     create = async (req, res, next) => {
         try {
-            const { id } = req.params;
-            const response = await this.repository.create(req.body);
-            if (!response) throw new CustomError('Cart not found', 404);
+            const response = await this.repository.create(id, req.body);
             res.json(response);
         } catch (error) {
             next(error);
@@ -61,14 +58,11 @@ class CartController {
         }
     };
 
-
     addProductToCart = async (req, res, next) => {
         try {
             const { cartId, productId } = req.params;
             const response = await this.repository.addProductToCart(cartId, productId);
-            if (!response) {
-                throw new CustomError('Cart not found', 404);
-            }
+            if (!response) throw new CustomError('Cart not found', 404);
             res.json(response);
         } catch (error) {
             next(error);
