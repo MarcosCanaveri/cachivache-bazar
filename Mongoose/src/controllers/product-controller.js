@@ -53,7 +53,7 @@ class ProductController {
     create = async (req, res, next) => {
         try {
             const { pid } = req.params;
-            const response = await this.repository.create(req.body );
+            const response = await this.repository.create(req.body);
             if (!response) throw new CustomError('Product not found', 404);
             res.json(response);
         } catch (error) {

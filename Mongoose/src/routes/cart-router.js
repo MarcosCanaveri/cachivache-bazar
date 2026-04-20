@@ -4,11 +4,11 @@ import { cartController } from "../controllers/cart-controller.js";
 const router = Router();
 
 router.get("/", cartController.getAll);
-router.get("/:id", cartController.getById);
+router.get("/:cid", cartController.getById);
 router.post("/", cartController.create);
-router.put("/:id", cartController.update);
-router.delete("/:id", cartController.delete);
-router.post("/add/:cartId/product/:productId", cartController.addProductToCart);
-router.post("/remove/:cartId/product/:productId", cartController.deleteProductFromCart);
+router.put("/:cid", cartController.update);
+router.delete("/:cid", cartController.delete);
+router.post("/add/:cid/product/:pid", cartController.addProductToCart);
+router.post("/remove/:cid/product/:pid", cartController.deleteProductFromCart);
 
 export default router;

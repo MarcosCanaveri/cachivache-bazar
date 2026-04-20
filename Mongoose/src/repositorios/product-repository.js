@@ -23,7 +23,7 @@ class ProductRepository {
 
     getByName = async (name) => {
         try {
-            return await this.model.findOne({ name: name }).explain();
+            return await this.model.findOne({ name: name });
         } catch (error) {
             throw new Error(error);
         }

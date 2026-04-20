@@ -14,9 +14,9 @@ class CartRepository {
         }
     };
 
-    getById = async (id) => {
+    getById = async (cid) => {
         try {
-            return await this.model.findById(id).populate('products', { _id: 0 });
+            return await this.model.findById(cid).populate('products', { _id: 0 });
         } catch (error) {
             throw new Error(error);
         }
@@ -30,46 +30,46 @@ class CartRepository {
         }
     };
 
-    update = async (id, body) => {
+    update = async (cid, body) => {
         try {
-            return await this.model.findByIdAndUpdate(id, body, { returnDocument: true });
+            return await this.model.findByIdAndUpdate(cid, body, { returnDocument: true });
         } catch (error) {
             throw new Error(error);
         }
     };
 
-    delete = async (id) => {
+    delete = async (cid) => {
         try {
-            return await this.model.findByIdAndDelete(id);
+            return await this.model.findByIdAndDelete(cid);
         } catch (error) {
             throw new Error(error);
         }
     };
 
-    addProductToCart = async (cartId, productId) => {
+    addProductToCart = async (cid, pid) => {
         try {
-            const product = await productRepository.getById(productId);
+            const product = await productRepository.getById(pid);
             if (!product) {
                 throw new Error("Product not found");
             }
             return await this.model.findByIdAndUpdate(
-                cartId, 
-                { $push: { products: productId } }, 
+                cid, 
+                { $push: { products: pid } }, 
                 { returnDocument: true });
         } catch (error) {
             throw new Error(error);
         }
 }
 
-    deleteProductFromCart = async (cartId, productId) => {
+    deleteProductFromCart = async (cid, pid) => {
         try {
-            const product = await productRepository.getById(productId);
+            const product = await productRepository.getById(pid);
             if (!product) {
                 throw new Error("Product not found");
             }
             return await this.model.findByIdAndUpdate(
-                cartId,
-                { $pull: { products: productId } },
+                cid,
+                { $pull: { products: pid } },
                 { returnDocument: true }
             );
         } catch (error) {
