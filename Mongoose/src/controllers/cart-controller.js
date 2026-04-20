@@ -81,6 +81,42 @@ class CartController {
             next(error);
         }
     };
-}
+
+    deleteAllProductsFromCart = async (req, res, next) => {
+        try {
+            const { cid } = req.params;
+            const response = await this.repository.deleteAllProductsFromCart(cid);
+            if (!response) throw new CustomError('Cart not found', 404);
+            res.json(response);
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    updateProductQuantityInCart = async (req, res, next) => {
+        try {
+            const { cid, pid } = req.params;
+            const { quantity } = req.body;
+            const response = await this.repository.updateProductQuantityInCart(cid, pid, quantity);
+            if (!response) throw new CustomError('Cart not found', 404);
+            res.json(response);
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    updateCartProducts = async (req, res, next) => {
+        try {            const { cid } = req.params;
+            const { products } = req.body;
+            const response = await this.repository.updateCartProducts(cid, products);
+            if (!response) throw new CustomError('Cart not found', 404);
+            res.json(response);
+    } catch (error) {            
+        next(error);
+        }
+    };
+
+
+};
 
 export const cartController = new CartController(cartRepository);

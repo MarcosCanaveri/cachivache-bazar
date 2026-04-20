@@ -54,12 +54,12 @@ class CartRepository {
             }
             return await this.model.findByIdAndUpdate(
                 cid, 
-                { $push: { products: pid } }, 
+                { $push: { products: {product: pid, quantity: 1 } } }, 
                 { returnDocument: true });
         } catch (error) {
             throw new Error(error);
         }
-}
+};
 
     deleteProductFromCart = async (cid, pid) => {
         try {
@@ -75,7 +75,53 @@ class CartRepository {
         } catch (error) {
             throw new Error(error);
         }
-    }
     };
+
+    deleteAllProductsFromCart = async (cid) => {
+        try {
+            return await this.model.findByIdAndUpdate(
+                cid,
+                { $set: { products: [] } },
+                { returnDocument: true }
+            );
+        } catch (error) {
+            throw new Error(error);
+        }
+    };
+
+    updateProductQuantityInCart = async (cid, pid, quantity) => {
+        try {
+            const product = await productRepository.getById(pid);
+            if (!product) {
+                throw new Error("Product not found");
+            }
+            return await this.model.findByIdAndUpdate(
+                cid,
+                { $set: { "products.$[elem].quantity": quantity } },
+                { arrayFilters: [{ "elem.product": pid }], returnDocument: true }
+            );
+        } catch (error) {
+            throw new Error(error);
+        }
+    };
+
+    updateCartProducts = async (cid, products) => {
+        try {
+            for (const item of products) {
+                const product = await productRepository.getById(item.product);
+                if (!product) {
+                    throw new Error("Product not found");
+                }
+            }
+            return await this.model.findByIdAndUpdate(
+                cid,
+                { $set: { products: products } },
+                { returnDocument: true }
+            );
+        } catch (error) {
+            throw new Error(error);
+        }
+    };
+};
 
 export const cartRepository = new CartRepository(CartModel);

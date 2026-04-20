@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/products', productRouter);
-app.use('/carts', cartRouter);
+app.use('/api/carts', cartRouter);
 
 app.use(errorHandler);
 
