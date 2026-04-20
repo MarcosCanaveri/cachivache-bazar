@@ -13,9 +13,9 @@ class ProductRepository {
         }
     };
 
-    getById = async (id) => {
+    getById = async (pid) => {
         try {
-            return await this.model.findById(id);
+            return await this.model.findById(pid);
         } catch (error) {
             throw new Error(error);
         }
@@ -38,17 +38,17 @@ class ProductRepository {
         }
     };
 
-    update = async (id, body) => {
+    update = async (pid, body) => {
         try {
-            return await this.model.findByIdAndUpdate(id, body, { returnDocument: true });
+            return await this.model.findByIdAndUpdate(pid, body, { returnDocument: true });
         } catch (error) {
             throw new Error(error);
         }
     };
 
-    delete = async (id) => {
+    delete = async (pid) => {
         try {
-            return await this.model.findByIdAndDelete(id);
+            return await this.model.findByIdAndDelete(pid);
         } catch (error) {
             throw new Error(error);
         }

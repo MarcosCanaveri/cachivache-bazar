@@ -30,8 +30,8 @@ class ProductController {
 
     getById = async (req, res, next) => {
         try {
-            const { id } = req.params;
-            const response = await this.repository.getById(id);
+            const { pid } = req.params;
+            const response = await this.repository.getById(pid);
             if (!response) throw new CustomError('Product not found', 404);
             res.json(response);
         } catch (error) {
@@ -52,7 +52,7 @@ class ProductController {
 
     create = async (req, res, next) => {
         try {
-            const { id } = req.params;
+            const { pid } = req.params;
             const response = await this.repository.create(req.body );
             if (!response) throw new CustomError('Product not found', 404);
             res.json(response);
@@ -63,8 +63,8 @@ class ProductController {
 
     update = async (req, res, next) => {
         try {
-            const { id } = req.params;
-            const response = await this.repository.update(id, req.body );
+            const { pid } = req.params;
+            const response = await this.repository.update(pid, req.body );
             if (!response) throw new CustomError('Product not found', 404);
             res.json(response);
         } catch (error) {
@@ -74,8 +74,8 @@ class ProductController {
 
     delete = async (req, res, next) => {
         try {
-            const { id } = req.params;
-            const response = await this.repository.delete(id);
+            const { pid } = req.params;
+            const response = await this.repository.delete(pid);
             if (!response) throw new CustomError('Product not found', 404);
             res.json(response);
         } catch (error) {

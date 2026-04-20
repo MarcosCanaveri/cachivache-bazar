@@ -68,6 +68,17 @@ class CartController {
             next(error);
         }
     };
+
+    deleteProductFromCart = async (req, res, next) => {
+        try {
+            const { cartId, productId } = req.params;
+            const response = await this.repository.deleteProductFromCart(cartId, productId);
+            if (!response) throw new CustomError('Cart not found', 404);
+            res.json(response);
+        } catch (error) {
+            next(error);
+        }
+    };
 }
 
 export const cartController = new CartController(cartRepository);

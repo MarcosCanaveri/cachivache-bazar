@@ -9,5 +9,6 @@ router.post("/", cartController.create);
 router.put("/:id", cartController.update);
 router.delete("/:id", cartController.delete);
 router.post("/add/:cartId/product/:productId", cartController.addProductToCart);
+router.post("/remove/:cartId/product/:productId", cartController.deleteProductFromCart);
 
 export default router;

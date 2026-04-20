@@ -4,9 +4,12 @@ const CartSchema = new Schema({
     id: { type: String, required: true, unique: true },
     products: [
         {
+            product: {
             type: Schema.Types.ObjectId,
             ref: 'products',
             default: [],
+            },
+            quantity: { type: Number, default: 1 }
         }
     ]
 });

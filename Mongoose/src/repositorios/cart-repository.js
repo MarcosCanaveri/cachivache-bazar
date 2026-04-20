@@ -60,6 +60,22 @@ class CartRepository {
             throw new Error(error);
         }
 }
-}
+
+    deleteProductFromCart = async (cartId, productId) => {
+        try {
+            const product = await productRepository.getById(productId);
+            if (!product) {
+                throw new Error("Product not found");
+            }
+            return await this.model.findByIdAndUpdate(
+                cartId,
+                { $pull: { products: productId } },
+                { returnDocument: true }
+            );
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+    };
 
 export const cartRepository = new CartRepository(CartModel);
