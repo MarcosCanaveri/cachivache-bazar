@@ -106,7 +106,8 @@ class CartController {
     };
 
     updateCartProducts = async (req, res, next) => {
-        try {            const { cid } = req.params;
+        try {
+            const { cid } = req.params;
             const { products } = req.body;
             const response = await this.repository.updateCartProducts(cid, products);
             if (!response) throw new CustomError('Cart not found', 404);
