@@ -5,9 +5,20 @@ class ProductRepository {
         this.model = model;
     }
 
-    getAll = async (page = 1, limit = 5) => {
+    getAll = async (page = 1, limit = 10, sort, query) => {
         try {
-            return await this.model.paginate({}, { limit: 5, page: 1 });
+            let filter = {};
+            if (query) {
+                if (query === "true" || query === "false") {
+                    filter = { status: query === "true" };
+                } else {
+                    filter = { category: query };
+                }
+            }
+            
+            const options = { limit, page };
+            if (sort) options.sort = {price: sort === 'asc' ? 1 : -1};
+            return await this.model.paginate(filter, options);
         } catch (error) {
             throw new Error(error);
         }

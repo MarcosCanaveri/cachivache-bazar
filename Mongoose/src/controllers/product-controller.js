@@ -8,8 +8,8 @@ class ProductController {
 
     getAll = async (req, res, next) => {
         try {
-            const { page, limit } = req.query;
-            const response = await this.repository.getAll(page, limit);
+            const { page, limit, sort, query } = req.query;
+            const response = await this.repository.getAll(page, limit, sort, query);
             res.json({
                 totalDocs: response.totalDocs,
                 status: 'success',

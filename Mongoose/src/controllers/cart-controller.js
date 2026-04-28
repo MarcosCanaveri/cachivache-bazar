@@ -9,7 +9,7 @@ class CartController {
     getAll = async (_req, res, next) => {
         try {
             const response = await this.repository.getAll();
-            res.json(response);
+            res.json({ status: 'success', payload: response });
         } catch (error) {
             next(error);
         }
@@ -21,7 +21,7 @@ class CartController {
             const { cid } = req.params;
             const response = await this.repository.getById(cid);
             if (!response) throw new CustomError('Cart not found', 404);
-            res.json(response);
+            res.json({ status: 'success', payload: response });
         } catch (error) {
             next(error);
         }
@@ -32,7 +32,7 @@ class CartController {
             const { cid } = req.params;
             const response = await this.repository.create(req.body);
             if (!response) throw new CustomError('Cart not found', 404);
-            res.json(response);
+            res.json({ status: 'success', payload: response });
         } catch (error) {
             next(error);
         }
@@ -43,7 +43,7 @@ class CartController {
             const { cid } = req.params;
             const response = await this.repository.update(cid, req.body);
             if (!response) throw new CustomError('Cart not found', 404);
-            res.json(response);
+            res.json({ status: 'success', payload: response });
         } catch (error) {
             next(error);
         }
@@ -54,7 +54,7 @@ class CartController {
             const { cid } = req.params;
             const response = await this.repository.delete(cid);
             if (!response) throw new CustomError('Cart not found', 404);
-            res.json(response);
+            res.json({ status: 'success', payload: response });
         } catch (error) {
             next(error);
         }
@@ -65,7 +65,7 @@ class CartController {
             const { cid, pid } = req.params;
             const response = await this.repository.addProductToCart(cid, pid);
             if (!response) throw new CustomError('Cart not found', 404);
-            res.json(response);
+            res.json({ status: 'success', payload: response });
         } catch (error) {
             next(error);
         }
@@ -76,7 +76,7 @@ class CartController {
             const { cid, pid } = req.params;
             const response = await this.repository.deleteProductFromCart(cid, pid);
             if (!response) throw new CustomError('Cart not found', 404);
-            res.json(response);
+            res.json({ status: 'success', payload: response });
         } catch (error) {
             next(error);
         }
@@ -87,7 +87,7 @@ class CartController {
             const { cid } = req.params;
             const response = await this.repository.deleteAllProductsFromCart(cid);
             if (!response) throw new CustomError('Cart not found', 404);
-            res.json(response);
+            res.json({ status: 'success', payload: response });
         } catch (error) {
             next(error);
         }
@@ -99,7 +99,7 @@ class CartController {
             const { quantity } = req.body;
             const response = await this.repository.updateProductQuantityInCart(cid, pid, quantity);
             if (!response) throw new CustomError('Cart not found', 404);
-            res.json(response);
+            res.json({ status: 'success', payload: response });
         } catch (error) {
             next(error);
         }
@@ -111,7 +111,7 @@ class CartController {
             const { products } = req.body;
             const response = await this.repository.updateCartProducts(cid, products);
             if (!response) throw new CustomError('Cart not found', 404);
-            res.json(response);
+            res.json({ status: 'success', payload: response });
     } catch (error) {            
         next(error);
         }
